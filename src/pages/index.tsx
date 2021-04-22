@@ -1,10 +1,11 @@
 import { GetStaticProps } from 'next';
+import Image from 'next/image';
 import { format, parseISO } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { api } from '../server/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 
-import styles from '.home.module.scss';
+import styles from './home.module.scss';
 
 type Episode = {
   id: string;
@@ -33,8 +34,26 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         <ul>
           {latestEpisodes.map(episode => {
             return (
-              <li>
-                <a href="">{episode.title}</a>
+              <li key={episode.id}>
+                <Image
+                  width={192}
+                  height={192}
+                  src={episode.thumbnail}
+                  alt={episode.title}
+                  objectFit="cover"
+                />
+
+                <div className={styles.episodeDetails}>
+                  <a href="">{episode.title}</a>
+                  <p>{episode.members}</p>
+                  <span>{episode.publishedAt}</span>
+                  <span>{episode.durationAsString}</span>
+                </div>
+
+                <button type="button">
+                  <img src="/play-green.svg" alt="Tocar episódio" />
+                </button>
+
               </li>
             )
           })}
@@ -42,7 +61,18 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
       </section>
 
       <section className={styles.allEpisodes}>
+        <h2>Todos os episódios</h2>
 
+        <table cellSpacing={0}>
+          <thead>
+            <th></th>
+            <th>Podcast</th>
+            <th>Integrantes</th>
+            <th>Data</th>
+            <th>Duração</th>
+            <th></th>
+          </thead>
+        </table>
       </section>
     </div>
   )
