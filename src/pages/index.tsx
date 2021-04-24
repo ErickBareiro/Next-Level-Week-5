@@ -72,6 +72,34 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
             <th>Duração</th>
             <th></th>
           </thead>
+          <tbody>
+            {allEpisodes.map(episode => {
+              return (
+                <tr key={episode.id}>
+                  <td>
+                    <Image
+                      width={120}
+                      height={120}
+                      src={episode.thumbnail}
+                      alt={episode.title}
+                      objectFit="cover"
+                    />
+                  </td>
+                  <td>
+                    <a href="">{ }/episode.title</a>
+                  </td>
+                  <td>{ }episode.members</td>
+                  <td>{ }episode.publishedAt</td>
+                  <td>{ }episode.durationAsString</td>
+                  <td>
+                    <button type="button">
+                      <img src="/play-green.svg" alt="Tocar episódio" />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
         </table>
       </section>
     </div>
